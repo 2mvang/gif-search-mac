@@ -18,6 +18,7 @@
   "homepage": "https://github.com/2mvang/gif-search-mac#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.2"
+    "express-handlebars": "^3.0.2",
+    "giphy-api": "^2.0.1"
   }
 }

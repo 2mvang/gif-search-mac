@@ -30,20 +30,20 @@ app.get('/greetings/:name', function (req, res) {
   res.render('greetings', {name: name});
 })
 
-app.get('/', function (req, res) {
-  console.log(req.query)
-  res.render('home')
-})
+// INITIALIZE THE GIPHY-API LIBRARY
+var giphy = require('giphy-api')();
 
+// REQUIRE HTTP MODULE
 var http = require('http');
 
 app.get('/', function (req, res) {
   console.log(req.query.term)
-  var queryString = "req.query.term";
+  var queryString = req.query.term;
   // ENCODE THE QUERY STRING TO REMOVE WHITE SPACES AND RESTRICTED CHARACTERS
   var term = encodeURIComponent(queryString);
+
   // PUT THE SEARCH TERM INTO THE GIPHY API SEARCH URL
-  var url = 'http://api.giphy.com/v1/gifs/search?q=' + term + '&api_key=DIuWUPHytRLd6UbaDFsNV7K6HHN28EJe'
+  var url = 'http://api.giphy.com/v1/gifs/search?q=' + term + '&api_key=dc6zaTOxFJmzC'
 
   http.get(url, function(response) {
     // SET ENCODING OF RESPONSE TO UTF8
@@ -64,3 +64,9 @@ app.get('/', function (req, res) {
     });
   });
 })
+
+app.get('/', function (req, res) {
+  giphy.search(req.query.term, function (err, response) {
+    res.render('home', {gifs: response.data})
+  });
+});
